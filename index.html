@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Watermark Tool</title>
+</head>
+<body>
+
+<div id="previewImageArea"></div>
+<input type="file" onchange="previewImage(this);" accept="image/png, image/jpeg">
+
+<script>
+/**
+ * 이미지 미리보기 함수
+ */
+function previewImage(inputFile){
+    const fileReader = new FileReader();
+    const selectedFile = inputFile.files[0];
+    
+    // 이미지 검사 (파일 확장자)
+    //const imageExts = ['gif','png','jpg','jpeg'];
+    //const fileExt = inputFile.value.split('.').pop().toLowerCase();
+
+    //if (!imageExts.includes(fileExt)){
+    //    alert('이미지 파일만 업로드해 주세요.');
+    //    return false;
+    //}
+
+    // 이미지 검사 (파일 타입)
+    if (selectedFile.type.match(/image.*/) === null){
+        alert('이미지 파일만 업로드해 주세요.');
+        return false;
+    }
+
+    if (selectedFile){
+        fileReader.addEventListener('load', function(){
+            const previewImg = document.createElement("img");
+            previewImg.id = "prev_img";
+            previewImg.src = fileReader.result;
+            document.getElementById('previewImageArea').appendChild(previewImg); 
+        });
+        fileReader.readAsDataURL(selectedFile);
+    }
+}
+</script>
+</body>
+</html>
